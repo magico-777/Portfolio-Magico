@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أحمد عمرو | ماجيكو — صانع محتوى ومحرر فيديو</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Cairo:wght@400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0a0a10;
+    --void-2:#121219;
+    --void-3:#191923;
+    --ember:#ff2e45;
+    --ember-dark:#9c0f1f;
+    --volt:#2d7dff;
+    --volt-dark:#0f3d99;
+    --bolt:#f4f4f8;
+    --spark:#ffc93c;
+    --ash:#9292a3;
+    --font-display:'Lalezar', system-ui, sans-serif;
+    --font-body:'Cairo', system-ui, sans-serif;
+    --font-tag:'Bebas Neue', system-ui, sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--bolt);
+    font-family:var(--font-body);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  section, header, footer{position:relative;}
+
+  ::selection{background:var(--ember);color:var(--bolt);}
+
+  :focus-visible{
+    outline:3px solid var(--spark);
+    outline-offset:3px;
+  }
+
+  .x-mark{
+    position:absolute;
+    font-family:var(--font-tag);
+    color:var(--bolt);
+    opacity:.12;
+    font-size:28px;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px clamp(20px,5vw,64px);
+    background:rgba(10,10,16,.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(244,244,248,.08);
+  }
+  .nav__logo{
+    font-family:var(--font-tag);
+    font-size:22px;
+    letter-spacing:2px;
+    direction:ltr;
+    display:inline-flex;
+    align-items:center;
+    gap:2px;
+  }
+  .nav__logo span:first-child{color:var(--ember);}
+  .nav__logo span:last-child{color:var(--volt);}
+  .nav__links{
+    display:flex;
+    gap:clamp(14px,2.5vw,34px);
+    font-size:15px;
+    font-weight:600;
+  }
+  .nav__links a{
+    position:relative;
+    padding:6px 2px;
+    opacity:.85;
+    transition:opacity .2s;
+  }
+  .nav__links a::after{
+    content:"";
+    position:absolute;
+    right:0;left:0;bottom:0;
+    height:2px;
+    background:linear-gradient(90deg,var(--ember),var(--volt));
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav__links a:hover{opacity:1;}
+  .nav__links a:hover::after{transform:scaleX(1);}
+  .nav__cta{
+    font-family:var(--font-tag);
+    font-size:14px;
+    letter-spacing:1px;
+    background:var(--ember);
+    color:var(--bolt);
+    padding:9px 18px;
+    border-radius:999px;
+    white-space:nowrap;
+    box-shadow:0 0 0 0 rgba(255,46,69,.5);
+    transition:box-shadow .25s, transform .2s;
+  }
+  .nav__cta:hover{box-shadow:0 0 24px 2px rgba(255,46,69,.55);transform:translateY(-1px);}
+
+  @media(max-width:760px){
+    .nav__links{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:92vh;
+    display:grid;
+    grid-template-columns:1fr 1.15fr;
+    align-items:center;
+    padding:60px clamp(20px,5vw,64px) 80px;
+    gap:40px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 18% 30%, rgba(45,125,255,.30), transparent 55%),
+      radial-gradient(circle at 82% 70%, rgba(255,46,69,.30), transparent 55%);
+    z-index:-2;
+  }
+  .hero-crack{
+    position:absolute;
+    top:0;
+    right:50%;
+    height:100%;
+    width:240px;
+    transform:translateX(50%);
+    z-index:-1;
+    opacity:.9;
+  }
+  .hero-crack path{
+    fill:none;
+    stroke:var(--bolt);
+    stroke-width:3;
+    stroke-linejoin:round;
+    stroke-linecap:round;
+    filter:drop-shadow(0 0 10px rgba(244,244,248,.55));
+    stroke-dasharray:1800;
+    stroke-dashoffset:1800;
+    animation:draw 2.2s ease forwards .3s;
+  }
+  @keyframes draw{to{stroke-dashoffset:0;}}
+
+  .hero__photo-wrap{
+    position:relative;
+    justify-self:start;
+  }
+  .hero__photo{
+    position:relative;
+    width:min(320px,80vw);
+    aspect-ratio:3/4;
+    border-radius:18px;
+    overflow:hidden;
+    border:3px solid rgba(244,244,248,.15);
+    box-shadow:0 0 0 6px rgba(45,125,255,.12), 0 30px 60px -20px rgba(0,0,0,.7);
+  }
+  .hero__photo img{width:100%;height:100%;object-fit:cover;}
+  .hero__photo::after{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(10,10,16,.75));
+  }
+  .hero__badge{
+    position:absolute;
+    bottom:-16px;
+    right:-16px;
+    background:var(--void-3);
+    border:1px solid rgba(244,244,248,.15);
+    border-radius:14px;
+    padding:10px 16px;
+    font-family:var(--font-tag);
+    letter-spacing:1px;
+    font-size:13px;
+    color:var(--spark);
+    box-shadow:0 10px 30px -10px rgba(0,0,0,.6);
+  }
+
+  .hero__content{max-width:620px;}
+  .hero__eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--font-tag);
+    letter-spacing:2px;
+    font-size:14px;
+    color:var(--spark);
+    margin-bottom:18px;
+  }
+  .hero__eyebrow::before{
+    content:"";
+    width:26px;height:2px;
+    background:var(--spark);
+    display:inline-block;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(42px,6vw,68px);
+    line-height:1.15;
+    color:var(--bolt);
+    margin-bottom:6px;
+  }
+  .hero h1 .hl-ember{color:var(--ember);}
+  .hero h1 .hl-volt{color:var(--volt);}
+  .hero__alias{
+    font-family:var(--font-tag);
+    direction:ltr;
+    display:inline-block;
+    font-size:clamp(20px,2.6vw,28px);
+    letter-spacing:3px;
+    color:var(--ash);
+    margin-bottom:22px;
+  }
+  .hero__desc{
+    font-size:16.5px;
+    color:#d4d4dd;
+    max-width:540px;
+    margin-bottom:30px;
+  }
+  .hero__meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px 22px;
+    font-size:14.5px;
+    color:var(--ash);
+    margin-bottom:32px;
+  }
+  .hero__meta li{display:flex;align-items:center;gap:8px;}
+  .hero__meta li svg{width:16px;height:16px;flex-shrink:0;}
+
+  .btn-row{display:flex;flex-wrap:wrap;gap:14px;}
+  .btn{
+    font-family:var(--font-tag);
+    letter-spacing:1px;
+    font-size:16px;
+    padding:14px 28px;
+    border-radius:12px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:transform .2s, box-shadow .25s, background .2s;
+  }
+  .btn--primary{
+    background:linear-gradient(90deg,var(--ember),#ff5a45);
+    color:var(--bolt);
+    box-shadow:0 10px 30px -10px rgba(255,46,69,.6);
+  }
+  .btn--primary:hover{transform:translateY(-2px);box-shadow:0 14px 36px -10px rgba(255,46,69,.75);}
+  .btn--ghost{
+    border:1.5px solid rgba(244,244,248,.3);
+    color:var(--bolt);
+    background:rgba(244,244,248,.04);
+  }
+  .btn--ghost:hover{border-color:var(--volt);background:rgba(45,125,255,.12);transform:translateY(-2px);}
+
+  @media(max-width:880px){
+    .hero{grid-template-columns:1fr;text-align:center;padding-top:40px;}
+    .hero__photo-wrap{justify-self:center;}
+    .hero__content{max-width:640px;margin:0 auto;}
+    .hero__eyebrow,.hero__meta,.btn-row{justify-content:center;}
+    .hero-crack{display:none;}
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{
+    max-width:680px;
+    margin:0 auto 46px;
+    text-align:center;
+    padding:0 20px;
+  }
+  .section-head .tag{
+    font-family:var(--font-tag);
+    letter-spacing:3px;
+    font-size:13px;
+    color:var(--volt);
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(32px,4.4vw,46px);
+    margin:10px 0 14px;
+  }
+  .section-head p{color:var(--ash);font-size:15.5px;}
+
+  .crack-divider{
+    width:100%;
+    height:46px;
+    margin:0 auto;
+    display:block;
+    opacity:.35;
+  }
+  .crack-divider path{
+    fill:none;
+    stroke:url(#crackGrad);
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  /* ---------- SKILLS ---------- */
+  .skills{padding:70px clamp(20px,5vw,64px) 30px;}
+  .skills__grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .skill-card{
+    background:var(--void-2);
+    border:1px solid rgba(244,244,248,.08);
+    border-radius:16px;
+    padding:26px 22px;
+    transition:transform .25s, border-color .25s, background .25s;
+  }
+  .skill-card:nth-child(odd):hover{border-color:var(--ember);box-shadow:0 14px 34px -16px rgba(255,46,69,.5);}
+  .skill-card:nth-child(even):hover{border-color:var(--volt);box-shadow:0 14px 34px -16px rgba(45,125,255,.5);}
+  .skill-card:hover{transform:translateY(-6px);}
+  .skill-card svg{width:30px;height:30px;margin-bottom:14px;}
+  .skill-card:nth-child(odd) svg{color:var(--ember);}
+  .skill-card:nth-child(even) svg{color:var(--volt);}
+  .skill-card h3{font-size:18px;margin-bottom:8px;font-weight:700;}
+  .skill-card p{font-size:14px;color:var(--ash);}
+
+  /* ---------- VIDEOS ---------- */
+  .videos{padding:80px clamp(20px,5vw,64px);}
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:24px;
+    max-width:1240px;
+    margin:0 auto;
+  }
+  .video-card{
+    position:relative;
+    background:var(--void-2);
+    border:1px solid rgba(244,244,248,.08);
+    border-radius:16px;
+    overflow:hidden;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .video-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px -18px rgba(0,0,0,.7);}
+  .video-card.vertical .video-frame{aspect-ratio:9/16;}
+  .video-card .video-frame{
+    position:relative;
+    aspect-ratio:16/9;
+    background:#000;
+    cursor:pointer;
+    overflow:hidden;
+  }
+  .video-frame img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+  .video-card:hover .video-frame img{transform:scale(1.06);}
+  .video-frame iframe{width:100%;height:100%;border:0;}
+  .play-btn{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .play-btn span{
+    width:58px;height:58px;
+    border-radius:50%;
+    background:rgba(10,10,16,.55);
+    border:2px solid rgba(244,244,248,.7);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .25s, background .25s;
+  }
+  .video-card:hover .play-btn span{background:var(--ember);transform:scale(1.08);}
+  .play-btn svg{width:20px;height:20px;color:var(--bolt);margin-right:-3px;}
+  .video-tag{
+    position:absolute;
+    top:12px;
+    right:12px;
+    font-family:var(--font-tag);
+    letter-spacing:1px;
+    font-size:12px;
+    padding:4px 10px;
+    border-radius:999px;
+    background:rgba(10,10,16,.6);
+    border:1px solid rgba(244,244,248,.25);
+  }
+  .video-card.vertical .video-tag{background:var(--ember);border-color:var(--ember);}
+  .video-meta{padding:14px 16px 18px;}
+  .video-meta .label{
+    font-family:var(--font-tag);
+    letter-spacing:1px;
+    font-size:12px;
+    color:var(--spark);
+    display:block;
+    margin-bottom:4px;
+  }
+  .video-meta h3{font-size:15.5px;font-weight:700;}
+
+  /* ---------- GALLERY ---------- */
+  .gallery{padding:80px clamp(20px,5vw,64px);}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:22px;
+    max-width:1240px;
+    margin:0 auto;
+  }
+  .thumb-card{
+    position:relative;
+    border-radius:16px;
+    overflow:hidden;
+    border:1px solid rgba(244,244,248,.08);
+    background:var(--void-2);
+  }
+  .thumb-card img{aspect-ratio:16/9;object-fit:cover;width:100%;transition:transform .45s;}
+  .thumb-card:hover img{transform:scale(1.07);}
+  .thumb-overlay{
+    position:absolute;inset:0;
+    background:linear-gradient(180deg, transparent 40%, rgba(10,10,16,.92) 100%);
+    display:flex;
+    align-items:flex-end;
+    padding:16px;
+    opacity:0;
+    transition:opacity .3s;
+  }
+  .thumb-card:hover .thumb-overlay{opacity:1;}
+  .thumb-overlay h3{font-size:15px;font-weight:700;}
+  .thumb-overlay span{font-family:var(--font-tag);letter-spacing:1px;font-size:11.5px;color:var(--spark);}
+
+  /* ---------- CONTACT / FOOTER ---------- */
+  .contact{
+    margin-top:60px;
+    padding:90px clamp(20px,5vw,64px) 40px;
+    overflow:hidden;
+  }
+  .contact::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      linear-gradient(115deg, rgba(45,125,255,.25) 0%, rgba(45,125,255,.25) 48%, transparent 50%),
+      linear-gradient(115deg, transparent 50%, rgba(255,46,69,.25) 52%, rgba(255,46,69,.25) 100%),
+      var(--void);
+    z-index:-1;
+  }
+  .contact-crack{
+    position:absolute;
+    top:0;left:0;
+    width:100%;height:100%;
+    z-index:-1;
+    opacity:.5;
+  }
+  .contact__inner{
+    max-width:720px;
+    margin:0 auto;
+    text-align:center;
+  }
+  .contact .tag{
+    font-family:var(--font-tag);
+    letter-spacing:3px;
+    font-size:13px;
+    color:var(--spark);
+  }
+  .contact h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(34px,5vw,52px);
+    margin:12px 0 16px;
+  }
+  .contact p{color:#d4d4dd;font-size:16px;margin-bottom:34px;}
+  .contact .btn--primary{font-size:18px;padding:16px 36px;margin-bottom:38px;}
+
+  .social-row{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:30px;
+  }
+  .social-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 20px;
+    border-radius:999px;
+    background:rgba(244,244,248,.06);
+    border:1px solid rgba(244,244,248,.18);
+    font-size:14.5px;
+    font-weight:600;
+    transition:transform .2s, border-color .2s, background .2s;
+  }
+  .social-pill svg{width:18px;height:18px;}
+  .social-pill:hover{transform:translateY(-3px);border-color:var(--spark);background:rgba(255,201,60,.1);}
+
+  .phone-line{
+    font-family:var(--font-tag);
+    direction:ltr;
+    font-size:20px;
+    letter-spacing:2px;
+    color:var(--bolt);
+    display:inline-block;
+    margin-bottom:46px;
+  }
+
+  .footer-note{
+    border-top:1px solid rgba(244,244,248,.1);
+    padding-top:24px;
+    font-size:13px;
+    color:var(--ash);
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+    .reveal{opacity:1;transform:none;}
+    .hero-crack path{stroke-dashoffset:0;}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="crackGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2d7dff"/>
+      <stop offset="50%" stop-color="#f4f4f8"/>
+      <stop offset="100%" stop-color="#ff2e45"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<nav class="nav">
+  <div class="nav__logo"><span>MAGI</span><span>CO</span></div>
+  <div class="nav__links">
+    <a href="#skills">المهارات</a>
+    <a href="#videos">الفيديوهات</a>
+    <a href="#gallery">التصاميم</a>
+    <a href="#contact">تواصل</a>
+  </div>
+  <a class="nav__cta" href="https://wa.me/201555902611" target="_blank" rel="noopener">واتساب</a>
+</nav>
+
+<header class="hero" id="home">
+  <svg class="hero-crack" viewBox="0 0 240 1000" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M120,0 L150,55 L95,110 L160,170 L80,225 L155,290 L75,345 L150,405 L90,465 L165,520 L80,580 L150,640 L90,700 L155,760 L100,815 L140,875 L95,935 L120,1000"/>
+  </svg>
+
+  <div class="hero__photo-wrap reveal">
+    <div class="hero__photo">
+      <img src="./WhatsApp Image 2026-06-20 at 2.20.30 PM.jpeg" alt="">
+    </div>
+    <div class="hero__badge">17 سنة · جيزة، مصر</div>
+  </div>
+
+  <div class="hero__content reveal">
+    <span class="hero__eyebrow">صانع محتوى · محرر فيديو · مصمم جرافيك</span>
+    <h1>أحمد عمرو<br><span class="hl-ember">المعروف</span> بـ <span class="hl-volt">"ماجيكو"</span></h1>
+    <span class="hero__alias">MAGICO</span>
+    <p class="hero__desc">
+      بصنع محتوى ترفيهي على قناة <strong>TRIVO</strong> — مقالب أوميجل وكرنج تيك توك وريأكشن —
+      ومتخصص في مونتاج الفيديو وتصميم الصور المصغرة (Thumbnails) والموشن جرافيك،
+      مع خلفية في البرمجة. شغوف بتعلم أي حاجة جديدة في عالم صناعة المحتوى.
+    </p>
+    <ul class="hero__meta">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c-4.5-4.2-7-8-7-11a7 7 0 1 1 14 0c0 3-2.5 6.8-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        حدائق أكتوبر، الجيزة
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        متاح للتعاون وفرص العمل
+      </li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn btn--primary" href="https://wa.me/201555902611" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12l1 .27.27 1.06-1.06-.27.2.8-2.4-.62a8 8 0 1 1-4.9-13.24Zm-3.2 4.4c-.2 0-.5 0-.7.4-.25.4-1 1-1 2.4s1 2.8 1.2 3 2.8 4.3 6.8 5.7c3.2 1.1 3.2.7 3.8.7.6 0 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.4-.3-.7-.5l-2.5-1.2c-.3-.1-.6-.2-.8.2l-.6 1c-.2.3-.4.4-.7.2-1.6-.7-3.2-2-4.2-3.8-.2-.3-.1-.5.1-.7l.6-.8c.2-.3.1-.5 0-.7l-1.1-2.7c-.2-.5-.4-.5-.7-.5h-.6Z"/></svg>
+        تواصل واتساب
+      </a>
+      <a class="btn btn--ghost" href="#videos">شاهد الفيديوهات</a>
+    </div>
+  </div>
+</header>
+
+<section class="skills" id="skills">
+  <svg class="crack-divider" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 L60,8 L120,46 L180,14 L240,42 L300,10 L360,40 L420,16 L480,44 L540,8 L600,38 L660,12 L720,42 L780,18 L840,46 L900,12 L960,40 L1000,26"/>
+  </svg>
+  <div class="section-head reveal">
+    <span class="tag">SKILLS</span>
+    <h2>المهارات</h2>
+    <p>أدوات وخبرات بستخدمها في صناعة المحتوى يوم بيوم</p>
+  </div>
+  <div class="skills__grid">
+    <div class="skill-card reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 9.5 22 6v12l-6-3.5"/></svg>
+      <h3>مونتاج الفيديو</h3>
+      <p>تحرير وتركيب فيديوهات يوتيوب وشورتس بإيقاع جاذب يناسب المحتوى الترفيهي.</p>
+    </div>
+    <div class="skill-card reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="10" r="2.2"/><path d="m21 16-5.5-5.5L4 21"/></svg>
+      <h3>تصميم جرافيك</h3>
+      <p>تصميم صور مصغرة (Thumbnails) جذابة ترفع نسبة الضغط على الفيديو.</p>
+    </div>
+    <div class="skill-card reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 3v18M19 3v18M5 8h4M5 16h4M15 8h4M15 16h4"/></svg>
+      <h3>موشن جرافيك</h3>
+      <p>عناصر متحركة وانتقالات وتأثيرات بصرية بتضيف حيوية للفيديو.</p>
+    </div>
+    <div class="skill-card reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 9-5 3 5 3M16 9l5 3-5 3M13 5l-2 14"/></svg>
+      <h3>برمجة</h3>
+      <p>أساسيات برمجية بتساعدني أفهم وأبني أدوات ومواقع زي ده.</p>
+    </div>
+  </div>
+</section>
+
+<section class="videos" id="videos">
+  <svg class="crack-divider" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 L60,8 L120,46 L180,14 L240,42 L300,10 L360,40 L420,16 L480,44 L540,8 L600,38 L660,12 L720,42 L780,18 L840,46 L900,12 L960,40 L1000,26"/>
+  </svg>
+  <div class="section-head reveal">
+    <span class="tag">FEATURED WORK</span>
+    <h2>أهم الفيديوهات</h2>
+    <p>فيديوهات من قناة TRIVO، وفيديوهات عملتلها مونتاج لقنوات وصناع محتوى تانيين</p>
+  </div>
+
+  <div class="video-grid" id="videoGrid">
+    <!-- video cards injected by JS -->
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <svg class="crack-divider" viewBox="0 0 1000 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 L60,8 L120,46 L180,14 L240,42 L300,10 L360,40 L420,16 L480,44 L540,8 L600,38 L660,12 L720,42 L780,18 L840,46 L900,12 L960,40 L1000,26"/>
+  </svg>
+  <div class="section-head reveal">
+    <span class="tag">THUMBNAIL DESIGN</span>
+    <h2>تصاميم الصور المصغرة</h2>
+    <p>نماذج من تصاميم الـ Thumbnails اللي صممتها لفيديوهات القناة</p>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="thumb-card reveal">
+        <img src="./ChatGPT Image Jun 10, 2026, 07_27_02 PM.png" alt="">
+       <div class="thumb-overlay"><div><span>TRIVO</span><h3>Omegle Edition</h3></div></div>
+    </div>
+    <div class="thumb-card reveal">
+        <img src="./اوميجل.png" alt="">
+      <div class="thumb-overlay"><div><span>TRIVO</span><h3>أوميجل انفجر</h3></div></div>
+    </div>
+    <div class="thumb-card reveal">
+        <img src="./ChatGPT Image Jun 3, 2026, 10_10_12 PM.png" alt="">
+      <div class="thumb-overlay"><div><span>TRIVO</span><h3>كرنج التيك توك</h3></div></div>
+    </div>
+    <div class="thumb-card reveal">
+       <img src="./ChatGPT Image Jun 3, 2026, 10_05_56 PM.png" alt="">
+      <div class="thumb-overlay"><div><span>TRIVO</span><h3>الكرنج اللي بعده</h3></div></div>
+    </div>
+    <div class="thumb-card reveal">
+      <img src="./ميمز.png" alt="">
+      <div class="thumb-overlay"><div><span>TRIVO</span><h3>ميمز الضحك مع التيك توك</h3></div></div>
+    </div>
+    <div class="thumb-card reveal">
+       <img src="./hqdefault.avif" alt="">
+      <div class="thumb-overlay"><div><span>TRIVO</span><h3>ضحكت؟</h3></div></div>
+    </div>
+  </div>
+</section>
+
+<footer class="contact" id="contact">
+  <svg class="contact-crack" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,200 L60,170 L130,225 L210,160 L300,230 L380,150 L470,220 L560,165 L650,225 L740,155 L830,220 L920,170 L1010,225 L1100,160 L1200,200"
+      fill="none" stroke="rgba(244,244,248,.5)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="contact__inner reveal">
+    <span class="tag">GET IN TOUCH</span>
+    <h2>تواصل معي</h2>
+    <p>متاح للتعاون وفرص العمل كـ Content Creator — في انتظار رسالتك</p>
+
+    <a class="btn btn--primary" href="https://wa.me/201555902611" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm0 2a8 8 0 0 1 6.9 12l1 .27.27 1.06-1.06-.27.2.8-2.4-.62a8 8 0 1 1-4.9-13.24Zm-3.2 4.4c-.2 0-.5 0-.7.4-.25.4-1 1-1 2.4s1 2.8 1.2 3 2.8 4.3 6.8 5.7c3.2 1.1 3.2.7 3.8.7.6 0 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.4-.3-.7-.5l-2.5-1.2c-.3-.1-.6-.2-.8.2l-.6 1c-.2.3-.4.4-.7.2-1.6-.7-3.2-2-4.2-3.8-.2-.3-.1-.5.1-.7l.6-.8c.2-.3.1-.5 0-.7l-1.1-2.7c-.2-.5-.4-.5-.7-.5h-.6Z"/></svg>
+      تواصل واتساب الآن
+    </a>
+
+    <div class="social-row">
+      <a class="social-pill" href="https://www.instagram.com/a7med_magico0/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+        إنستجرام
+      </a>
+      <a class="social-pill" href="https://www.tiktok.com/@_trivo_" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 3c.5 2.5 2.3 4.3 5 4.7"/></svg>
+        تيك توك
+      </a>
+      <a class="social-pill" href="https://www.facebook.com/ahmed.amr.989192" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M14 8.5h-1.5A1.5 1.5 0 0 0 11 10v2H9v2.5h2V21h2.5v-6.5H16l.5-2.5h-2.5V10c0-.3.2-.5.5-.5H16V8Z"/></svg>
+        فيسبوك
+      </a>
+      <a class="social-pill" href="https://www.linkedin.com/in/ahmed-magico-3a939939b/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5v6M7.5 7.8v.1M11 16.5v-3.7c0-1.2.9-2 2-2s2 .8 2 2v3.7"/></svg>
+        لينكدإن
+      </a>
+    </div>
+
+    <a class="phone-line" href="tel:+201555902611">+20 1555 902 611</a>
+
+    <div class="footer-note">© 2026 أحمد عمرو "ماجيكو" — TRIVO. جميع الأعمال المعروضة من تصميم ومونتاج صاحب الموقع.</div>
+  </div>
+</footer>
+
+<script>
+  const VIDEOS = [
+    { id:"aXfMVi57g6Y", title:"فيديو ١ — TRIVO", vertical:false },
+    { id:"AX2Git8DwgI", title:"فيديو ٢ — TRIVO", vertical:false },
+    { id:"gx45FNAKxDA", title:"فيديو ٣ — TRIVO", vertical:false },
+    { id:"el0DqGwQ6XI", title:"شورت — TRIVO", vertical:true },
+    { id:"jiBkp4s9zW8", title:"شورت — TRIVO", vertical:true },
+    { id:"FAaglT8vz5M", title:"شورت — TRIVO", vertical:true },
+    { id:"hit9oH3Nw2k", title:"تعاون مع يوسف الفن وتريبلز", vertical:false },
+    { id:"CSCzyh0jaS0", title:"شورت — TRIVO", vertical:true },
+  ];
+
+  const grid = document.getElementById('videoGrid');
+  VIDEOS.forEach((v, i) => {
+    const card = document.createElement('div');
+    card.className = 'video-card reveal' + (v.vertical ? ' vertical' : '');
+    card.innerHTML = `
+      <div class="video-frame" data-id="${v.id}">
+        <img loading="lazy" src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}">
+        <div class="play-btn"><span><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg></span></div>
+        <div class="video-tag">${v.vertical ? 'SHORTS' : 'VIDEO'}</div>
+      </div>
+      <div class="video-meta">
+        <span class="label">VID ${String(i+1).padStart(2,'0')}</span>
+        <h3>${v.title}</h3>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  grid.addEventListener('click', (e) => {
+    const frame = e.target.closest('.video-frame');
+    if(!frame || frame.querySelector('iframe')) return;
+    const id = frame.dataset.id;
+    frame.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+  });
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold:.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // newly created video cards need observing too
+  document.querySelectorAll('#videoGrid .reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
